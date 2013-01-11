@@ -5,6 +5,7 @@ import pysolr
 import unicodecsv
 import bz2
 import logging
+import utils
 
 def do_import (options):
 
@@ -33,7 +34,6 @@ def do_import (options):
             'collection': 'walkerartcenter',
             'collection_id': id,
             'name' : row['preferredlabel'],
-            'concordances' : [ 'ulan:id=%s' % id ],
             }
 
         if row.get('birthdate', ''):
@@ -41,6 +41,14 @@ def do_import (options):
 
         if row.get('deathdate', ''):
             doc['year_death'] = row['deathdate']
+
+        concordances = [ 'ulan:id=%s' % id ]
+
+        if len(concordances):
+            doc['concordances'] = concordances
+
+            doc['concordances_machinetags'] = utils.generate_concordances_machinetags(concordances)
+            doc['concordances_machinetags_hierarchy'] = utils.generate_concordances_machinetags_hierarchy(concordances)
 
         docs.append(doc)
 

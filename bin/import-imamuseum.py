@@ -4,10 +4,13 @@ import logging
 import sys
 import pysolr
 import unicodecsv
-import machinetag
+import utils
 import bz2
+import re
 
 def do_import (options):
+
+    dt = re.compile("\d{4}(?:\s?-\s?\d{4})?$")
 
     people = options.people
 
@@ -27,6 +30,9 @@ def do_import (options):
 
     for row in reader:
 
+        if row['display_name'] == '':
+            continue
+
         doc = {
             'uri': 'x-urn:imamuseum:id=%s' % row['irn'],
             'collection': 'imamuseum',
@@ -34,18 +40,24 @@ def do_import (options):
             'name' : row['display_name']
             }
 
+        # grrrnnnngmmghhnhnnrnnrnn....
+
         for prop in ('birth_date', 'death_date'):
 
-            if row[ prop ] != '':
-                parts = row[ prop ].split('-')
+            date = row[ prop ].strip()
 
-                if prop == 'birth_date':
-                    doc['year_birth'] = parts[0]
+            if not dt.match(date):
+                continue
+
+            parts = date.split('-')
+
+            if prop == 'birth_date':
+                doc['year_birth'] = parts[0].strip()
+            else:
+                if len(parts) == 1:
+                    doc['year_death'] = parts[0].strip()
                 else:
-                    if len(parts) == 1:
-                        doc['year_death'] = parts[0]
-                    else:
-                        doc['year_death'] = parts[1]
+                    doc['year_death'] = parts[1].strip()
 
         concordances = []
 
@@ -54,6 +66,9 @@ def do_import (options):
 
         if len(concordances):
             doc['concordances'] = concordances
+
+            doc['concordances_machinetags'] = utils.generate_concordances_machinetags(concordances)
+            doc['concordances_machinetags_hierarchy'] = utils.generate_concordances_machinetags_hierarchy(concordances)
 
         docs.append(doc)
 

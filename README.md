@@ -18,7 +18,11 @@ are bzip2 encoded and uncompressed (and processed) on the fly.
 
 ### import-cooperhewitt.py
 
+### import-imamuseum.py
+
 ### import-openlibrary.py
+
+### import-walkerarts.py
 
 See also
 --

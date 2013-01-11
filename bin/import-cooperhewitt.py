@@ -4,8 +4,8 @@ import logging
 import sys
 import pysolr
 import unicodecsv
-import machinetag
 import bz2
+import utils
 
 def do_import (options):
 
@@ -52,6 +52,9 @@ def do_import (options):
 
         if len(concordances):
             doc['concordances'] = concordances
+
+            doc['concordances_machinetags'] = utils.generate_concordances_machinetags(concordances)
+            doc['concordances_machinetags_hierarchy'] = utils.generate_concordances_machinetags_hierarchy(concordances)
 
         docs.append(doc)
 
