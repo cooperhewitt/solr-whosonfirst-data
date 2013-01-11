@@ -8,7 +8,25 @@ repository.
 data
 --
 
-TBW
+Sample data files are available from the following sources:
+
+* [Cooper-Hewitt National Design Museum](https://github.com/cooperhewitt/collection/)
+
+* [Indianopolis Museum of Art](https://github.com/IMAmuseum/ima-collection)
+
+* [Open Library (authors)](http://openlibrary.org/developers/dumps)
+
+* Walker Arts Center
+
+Please note that the data in these files is not standardized. There are source
+specific tools for importing each dataset in the `bin` directory.
+
+In some cases the data here is a subset of the data that the source itself
+publishes. For example, the Open Library dataset only contains authors and IDs
+since there are so many of them (approxiamately 7M).
+
+Additional datasets will be added as time and circumstances (and pull requests)
+permit. We're looking at you, Wikipedia.
 
 bin
 --
@@ -18,11 +36,19 @@ are bzip2 encoded and uncompressed (and processed) on the fly.
 
 ### import-cooperhewitt.py
 
+	$> ./import-cooperhewitt.py -p ../data/people-cooperhewitt.csv.bz2
+
 ### import-imamuseum.py
+
+	$> ./import-imamuseum.py -p ../data/people-imamuseum.csv.bz2
 
 ### import-openlibrary.py
 
+	$> ./import-openlibrary.py -p ../data/people-openlibrary.csv.bz2
+
 ### import-walkerarts.py
+
+	$> ./import-walkerarts.py -p ../data/people-walkerarts.csv.bz2
 
 See also
 --
