@@ -23,32 +23,34 @@ def do_import (options):
     solr = pysolr.Solr(endpoint)
 
     if options.purge:
-        solr.delete(q="collection:cooperhewitt")
+        solr.delete(q="collection:imamuseum")
 
     for row in reader:
 
         doc = {
-            'uri': 'x-urn:ch:id=%s' % row['id'],
-            'collection': 'cooperhewitt',
-            'collection_id': row['id'],
-            'name' : row['name']
+            'uri': 'x-urn:imamuseum:id=%s' % row['irn'],
+            'collection': 'imamuseum',
+            'collection_id': row['irn'],
+            'name' : row['display_name']
             }
+
+        for prop in ('birth_date', 'death_date'):
+
+            if row[ prop ] != '':
+                parts = row[ prop ].split('-')
+
+                if prop == 'birth_date':
+                    doc['year_birth'] = parts[0]
+                else:
+                    if len(parts) == 1:
+                        doc['year_death'] = parts[0]
+                    else:
+                        doc['year_death'] = parts[1]
 
         concordances = []
 
-        for k, v in row.items():
-
-            if not v:
-                continue
-
-            if k == 'tms:id':
-                continue
-
-            parts = k.split(':')
-
-            if len(parts) == 2 and parts[1] == 'id':
-                mt = "=".join((k, v))
-                concordances.append(mt)
+        if row['ulan:id'] != '':
+            concordances.append('ulan:id=%s' % row['ulan:id'])
 
         if len(concordances):
             doc['concordances'] = concordances
