@@ -36,19 +36,19 @@ are bzip2 encoded and uncompressed (and processed) on the fly.
 
 ### import-cooperhewitt.py
 
-	$> ./import-cooperhewitt.py -p ../data/people-cooperhewitt.csv.bz2
+	$> ./bin/import-cooperhewitt.py -p ./data/people-cooperhewitt.csv.bz2
 
 ### import-imamuseum.py
 
-	$> ./import-imamuseum.py -p ../data/people-imamuseum.csv.bz2
+	$> ./bin/import-imamuseum.py -p ./data/people-imamuseum.csv.bz2
 
 ### import-openlibrary.py
 
-	$> ./import-openlibrary.py -p ../data/people-openlibrary.csv.bz2
+	$> ./bin/import-openlibrary.py -p ./data/people-openlibrary.csv.bz2
 
 ### import-walkerarts.py
 
-	$> ./import-walkerarts.py -p ../data/people-walkerarts.csv.bz2
+	$> ./bin/import-walkerarts.py -p ./data/people-walkerarts.csv.bz2
 
 See also
 --
