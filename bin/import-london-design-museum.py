@@ -28,9 +28,9 @@ def do_import (options):
     for row in reader:
 
         doc = {
-            'uri': 'x-urn:ldm:id=%s' % row['ldm_id'],
+            'uri': 'x-urn:ldm:id=%s' % row['id'],
             'collection': 'london-design-museum',
-            'collection_id': row['ldm_id'],
+            'collection_id': row['id'],
             'name' : row['name']
             }
 
@@ -44,7 +44,7 @@ def do_import (options):
             if k == 'confidence':
                 continue
 
-            parts = k.split('_')
+            parts = k.split(':')
 
             if len(parts) == 2 and parts[1] == 'id':
                 mt = "=".join((k, v))
