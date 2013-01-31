@@ -39,7 +39,7 @@ def do_import(options):
             solr.add(docs)
             docs = []
 
-    if len(docs) == 10000:
+    if len(docs):
         solr.add(docs)
         docs = []
 

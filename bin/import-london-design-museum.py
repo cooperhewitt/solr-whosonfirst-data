@@ -23,14 +23,14 @@ def do_import (options):
     solr = pysolr.Solr(endpoint)
 
     if options.purge:
-        solr.delete(q="collection:cooperhewitt")
+        solr.delete(q="collection:london-design-museum")
 
     for row in reader:
 
         doc = {
-            'uri': 'x-urn:ch:id=%s' % row['id'],
-            'collection': 'cooperhewitt',
-            'collection_id': row['id'],
+            'uri': 'x-urn:ldm:id=%s' % row['ldm_id'],
+            'collection': 'london-design-museum',
+            'collection_id': row['ldm_id'],
             'name' : row['name']
             }
 
@@ -41,10 +41,10 @@ def do_import (options):
             if not v:
                 continue
 
-            if k == 'tms:id':
+            if k == 'confidence':
                 continue
 
-            parts = k.split(':')
+            parts = k.split('_')
 
             if len(parts) == 2 and parts[1] == 'id':
                 mt = "=".join((k, v))
