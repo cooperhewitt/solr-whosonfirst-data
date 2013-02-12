@@ -29,7 +29,7 @@ def do_import (options):
 
         doc = {
             'uri': 'x-urn:ldm:id=%s' % row['id'],
-            'collection': 'london-design-museum',
+            'collection': 'ldm',
             'collection_id': row['id'],
             'name' : row['name']
             }
